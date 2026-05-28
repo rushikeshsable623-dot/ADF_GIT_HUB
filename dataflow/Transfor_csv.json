@@ -1,0 +1,86 @@
+{
+	"name": "Transfor_csv",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "data_flow_source",
+						"type": "DatasetReference"
+					},
+					"name": "sourceCSV"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "sink_in_reporting",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "selectCol"
+				},
+				{
+					"name": "filterrows"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "derivedColumn"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          transaction_id as short,",
+				"          transactional_date as timestamp,",
+				"          product_id as string,",
+				"          customer_id as short,",
+				"          payment as string,",
+				"          credit_card as long,",
+				"          loyalty_card as boolean,",
+				"          cost as double,",
+				"          quantity as short,",
+				"          price as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> sourceCSV",
+				"sourceCSV select(mapColumn(",
+				"          transaction_id,",
+				"          transactional_date,",
+				"          product_id,",
+				"          customer_id,",
+				"          payment,",
+				"          credit_card,",
+				"          cost,",
+				"          price",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectCol",
+				"selectCol filter(customer_id != 12) ~> filterrows",
+				"filterrows split(payment == 'visa',",
+				"     payment == 'mastercard',",
+				"     disjoint: false) ~> split1@(visa, mastercard, otherthanvisa)",
+				"split1@otherthanvisa derive(payment = coalesce(payment,'N/A')) ~> derivedColumn",
+				"split1@visa aggregate(groupBy(customer_id),",
+				"     product_id = max(payment)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

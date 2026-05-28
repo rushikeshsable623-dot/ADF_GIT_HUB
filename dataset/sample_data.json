@@ -1,0 +1,17 @@
+{
+	"name": "sample_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sample_dataset_link_service",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "SalesLT",
+			"table": "Customer"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

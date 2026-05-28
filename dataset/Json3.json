@@ -1,0 +1,27 @@
+{
+	"name": "Json3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedserviceDL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "cdc.json",
+				"fileSystem": "samplefilesource"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"cdc_timestamp": {
+					"type": "string"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

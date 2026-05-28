@@ -1,0 +1,15 @@
+{
+	"name": "Rushiadffactory",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "374ccd6d-0ea4-45fd-804c-fdc60060a763",
+		"tenantId": "2ad462a0-2397-4fed-a071-407da7b57f61"
+	}
+}
