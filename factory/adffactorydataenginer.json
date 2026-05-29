@@ -1,0 +1,15 @@
+{
+	"name": "adffactorydataenginer",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "02539a23-57b0-49d2-8665-0e9acaf57df6",
+		"tenantId": "2ad462a0-2397-4fed-a071-407da7b57f61"
+	}
+}
